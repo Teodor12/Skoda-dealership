@@ -7,17 +7,11 @@ import { User } from '../model/User';
 export const configureRoutes = (passport: PassportStatic, router: Router): Router => {
 
     router.get('/', (req: Request, res: Response) => {
-        let myClass = new MainClass();
-        res.status(200).send('Hello, World!');
+        res.status(200).send('Skoda dealership');
     });
 
-
     router.post('/login', (req: Request, res: Response, next: NextFunction) => {
-
-        console.log("Login request headers:", req.headers);
-        console.log("Login request body:", req.body);
-
-            passport.authenticate('local', (error: Error | null, user: Express.User | false, info?: { message: string }) => {
+        passport.authenticate('local', (error: Error | null, user: typeof User | false, info?: { message: string }) => {
             if (error) {
                 console.error(error);
                 return res.status(500).json({ message: 'Internal server error.' });
@@ -31,43 +25,15 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
                 if (err) {
                     console.error(err);
                     return res.status(500).json({ message: 'Internal server error.' });
+                } else {
+                    return res.status(200).json(user);
                 }
-                return res.status(200).json(user);
             });
         })(req, res, next);
     });
 
-
-
-    /*
-    router.post('/login', (req: Request, res: Response, next: NextFunction) => {
-        passport.authenticate('local', (error: string | null, user: typeof User) => {
-            if (error) {
-                console.log(error);
-                res.status(500).send(error);
-            } else {
-                if (!user) {
-                    res.status(400).send('User not found.');
-                } else {
-                    req.login(user, (err: string | null) => {
-                        if (err) {
-                            console.log(err);
-                            res.status(500).send('Internal server error.');
-                        } else {
-                            res.status(200).send(user);
-                        }
-                    });
-                }
-            }
-        })(req, res, next);
-    });*/
-
     router.post('/register', (req: Request, res: Response) => {
-        const email = req.body.email;
-        const password = req.body.password;
-        const name = req.body.name;
-        const phoneNumber = req.body.phoneNumber
-        const user = new User({email: email, password: password, name: name, phoneNumber: phoneNumber});
+        const user = new User({email: req.body.email, password: req.body.password, name: req.body.name, phoneNumber: req.body.phoneNumber});
         user.save().then(data => {
             res.status(200).send(data);
         }).catch(error => {
@@ -89,6 +55,15 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         }
     });
 
+    router.get('/checkAuth', (req: Request, res: Response) => {
+        if (req.isAuthenticated()) {
+            res.status(200).send(true);
+        } else {
+            res.status(200).send(false);
+        }
+    });
+
+    /********************* Endpoints for Users *********************/
     router.get('/getAllUsers', (req: Request, res: Response) => {
         if (req.isAuthenticated()) {
             const query = User.find();
@@ -100,14 +75,6 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
             })
         } else {
             res.status(500).send('User is not logged in.');
-        }
-    });
-
-    router.get('/checkAuth', (req: Request, res: Response) => {
-        if (req.isAuthenticated()) {
-            res.status(200).send(true);
-        } else {
-            res.status(500).send(false);
         }
     });
 
