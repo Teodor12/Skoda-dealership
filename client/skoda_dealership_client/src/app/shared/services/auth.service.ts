@@ -30,21 +30,6 @@ export class AuthService {
     );
   }
 
-  /*
-  // login
-  login(email: string, password: string) {
-    // HTTP POST request
-    const body = new URLSearchParams();
-    body.set('username', email);
-    body.set('password', password);
-
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/x-www-form-urlencoded'
-    });
-
-    return this.http.post('http://localhost:5000/app/login', body, {headers: headers, withCredentials: true});
-  }*/
-
   register(user: User) {
     // HTTP POST request
     const body = new URLSearchParams();

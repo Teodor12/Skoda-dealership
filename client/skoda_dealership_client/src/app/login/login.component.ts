@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { User } from '../shared/model/User';
 
 @Component({
   selector: 'app-login',
@@ -30,44 +31,25 @@ export class LoginComponent {
     }
 
     this.authService.login(this.email, this.password).subscribe({
-      next: () => {
-        this.isLoading = false;
-        this.router.navigateByUrl('/user-management');
+      next: (data: User) => {
+        if (data.email === 'admin@gmail.com' && data.name === 'admin') {
+          localStorage.setItem('currentUser', 'admin');
+        } else {
+          localStorage.setItem('currentUser', data.email);
+        }
+        setTimeout(() => {
+          this.isLoading = false;
+          console.log('admin is logged in');
+        }, 1000);
       },
       error: (err) => {
-        this.isLoading = false;
-        this.errorMessage = err.message; // Display the error message from the backend
+        setTimeout(() => {
+          this.isLoading = false;
+          this.errorMessage = err.message;
+        }, 1000);
       }
     });
-}
-
-
-  /*
-  login() {
-    this.isLoading = true;
-    setTimeout(() => {
-      if (this.email && this.password) {
-        this.errorMessage = '';
-        this.authService.login(this.email, this.password).subscribe({
-          next: (data) => {
-            if (data) {
-              // navigation
-              console.log(data);
-              this.isLoading = false;
-              this.router.navigateByUrl('/user-management');
-            }
-          }, error: (err) => {
-            console.log(err);
-            this.isLoading = false;
-          },
-        })
-      } else {
-        this.isLoading = false;
-        this.errorMessage = 'Form is empty.';
-      }
-    }, 1500);
   }
-  */
 
   navigate(to: string) {
     this.router.navigateByUrl(to);
