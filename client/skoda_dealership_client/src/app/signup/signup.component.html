@@ -2,26 +2,55 @@
     <form class="signup-form" [formGroup]="signupForm" (ngSubmit)="onSubmit()">
         <input formControlName="email" type="email" placeholder="Email" required [ngClass]="{'invalid-input': signupForm.get('email')?.errors}" />
         <div *ngIf="signupForm.get('email')?.invalid && (signupForm.get('email')?.dirty || signupForm.get('email')?.touched)">
-            <p *ngIf="signupForm.get('email')?.errors && signupForm.get('email')?.errors!['required']">Email is required.</p>
-            <p *ngIf="signupForm.get('email')?.errors && signupForm.get('email')?.errors!['email']">Please enter a valid email.</p>
+            <i *ngIf="signupForm.get('email')?.errors && signupForm.get('email')?.errors!['required']">Email is required.</i>
+            <i *ngIf="signupForm.get('email')?.errors && signupForm.get('email')?.errors!['email']">Please enter a valid email.</i>
         </div>
+
         <input formControlName="name" type="text" placeholder="Name" />
-        <input formControlName="phoneNumber" type="text" placeholder="Phone Number" />
+        <div *ngIf="signupForm.get('name')?.invalid && (signupForm.get('name')?.dirty || signupForm.get('name')?.touched)">
+            <i *ngIf="signupForm.get('name')?.errors && signupForm.get('name')?.errors!['required']">Name is required.</i>
+        </div>
+
+        <input formControlName="phoneNumber" type="tel" placeholder="Phone Number" required [ngClass]="{'invalid-input': signupForm.get('phoneNumber')?.errors}" />
+        <div *ngIf="signupForm.get('phoneNumber')?.invalid && (signupForm.get('phoneNumber')?.dirty || signupForm.get('phoneNumber')?.touched)">
+            <i *ngIf="signupForm.get('phoneNumber')?.errors?.['required']">Phone number is required.</i>
+            <i *ngIf="!signupForm.get('phoneNumber')?.errors?.['required']"> Phone number must:
+                <span *ngIf="signupForm.get('phoneNumber')?.errors?.['prefix']">start with 06, </span>
+                <span *ngIf="signupForm.get('phoneNumber')?.errors?.['length']">be between 6 and 8 digits, </span>
+                <span *ngIf="signupForm.get('phoneNumber')?.errors?.['numeric']">contain only numeric characters.</span>
+            </i>
+        </div>
+
         <input formControlName="password" type="password" placeholder="Password" required [ngClass]="{'invalid-input': signupForm.get('password')?.errors}" />
         <div *ngIf="signupForm.get('password')?.invalid && (signupForm.get('password')?.dirty || signupForm.get('password')?.touched)">
-            <p *ngIf="signupForm.get('password')?.errors && signupForm.get('password')?.errors!['required']">Password is required.</p>
-            <p *ngIf="signupForm.get('password')?.errors && signupForm.get('password')?.errors!['minlength']">Password must be at least 6 characters.</p>
-        </div>
+            <i *ngIf="signupForm.get('password')?.errors?.['required']">Password is required.</i>
+            <i *ngIf="!signupForm.get('password')?.errors?.['required']"> Password must:
+              <span *ngIf="signupForm.get('password')?.errors?.['uppercase']">contain an uppercase letter, </span>
+              <span *ngIf="signupForm.get('password')?.errors?.['number']">contain a number, </span>
+              <span *ngIf="signupForm.get('password')?.errors?.['length']">be at least 8 characters</span>
+            </i>
+          </div>
+
         <input formControlName="confirmPassword" type="password" placeholder="Confirm password" required [ngClass]="{'invalid-input': signupForm.get('confirmPassword')?.errors}" />
         <div *ngIf="signupForm.get('confirmPassword')?.invalid && (signupForm.get('confirmPassword')?.dirty || signupForm.get('confirmPassword')?.touched)">
-            <p *ngIf="signupForm.get('confirmPassword')?.errors && signupForm.get('confirmPassword')?.errors!['required']">Confirming password is required.</p>
-            <p *ngIf="signupForm.get('confirmPassword')?.errors && signupForm.get('confirmPassword')?.errors!['mustMatch']">Passwords must match.</p>
+            <i *ngIf="signupForm.get('confirmPassword')?.errors && signupForm.get('confirmPassword')?.errors!['required']">Confirming password is required.</i>
+            <i *ngIf="signupForm.get('confirmPassword')?.errors && signupForm.get('confirmPassword')?.errors!['mustMatch']">Passwords must match.</i>
         </div>
+
+        <div *ngIf="errorMessage" class="error-message">
+            <i>{{ errorMessage }}</i>
+        </div>
+
         <div class="buttons">
             <button type="submit">Sign Up</button>
         </div>
         <div class="buttons">
             <button type="reset" (click)="goBack()">Back</button>
         </div>
+
+        <div class="overlay" *ngIf="isSigningUp">
+            <mat-spinner class="custom-spinner"></mat-spinner>
+        </div>
+
     </form>
 </div>

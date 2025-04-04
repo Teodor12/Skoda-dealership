@@ -10,10 +10,12 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         res.status(200).send('Skoda dealership');
     });
 
+
+    /********************* Endpoints for Authentication *********************/
+
     router.post('/login', (req: Request, res: Response, next: NextFunction) => {
         passport.authenticate('local', (error: Error | null, user: typeof User | false, info?: { message: string }) => {
             if (error) {
-                console.error(error);
                 return res.status(500).json({ message: 'Internal server error.' });
             }
 
@@ -32,13 +34,19 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         })(req, res, next);
     });
 
-    router.post('/register', (req: Request, res: Response) => {
-        const user = new User({email: req.body.email, password: req.body.password, name: req.body.name, phoneNumber: req.body.phoneNumber});
-        user.save().then(data => {
-            res.status(200).send(data);
-        }).catch(error => {
-            res.status(500).send(error);
-        })
+    router.post('/register',  async (req: Request, res: Response) => {
+        User.findOne({ email: req.body.email }).then(existingUser => {
+            if (existingUser) {
+                return res.status(400).json({ message: 'Email is already in use.'});
+            }
+
+            const user = new User({email: req.body.email, password: req.body.password, name: req.body.name, phoneNumber: req.body.phoneNumber});
+            user.save().then(data => {
+                res.status(200).send(data);
+            }).catch(error => {
+                res.status(500).send(error);
+            })
+        });
     });
 
     router.post('/logout', (req: Request, res: Response) => {
