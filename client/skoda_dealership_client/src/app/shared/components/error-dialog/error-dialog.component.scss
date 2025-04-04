@@ -1,0 +1,54 @@
+:host {
+    display: block;
+    max-width: 400px;
+    margin: 20px auto;
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 6px 24px rgba(0, 100, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
+    padding: 20px;
+}
+
+/* Header styling */
+h2 {
+    text-align: center;
+    margin: 0 0 10px;
+    font-size: 24px;
+    color: #d9534f; /* red tone to emphasize error */
+}
+
+/* Content styling */
+mat-dialog-content {
+    font-size: 16px;
+    padding: 10px 20px;
+    color: #333;
+}
+
+/* Actions styling */
+mat-dialog-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 15px;
+}
+
+/* Button styling */
+button[mat-button] {
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    padding: 13px 20px;
+    font-size: 15px;
+    font-weight: 600;
+    color: white;
+    background: #5cb85c; /* consistent green */
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button[mat-button]:hover {
+    background: #4cae4c;
+    box-shadow: 0 3px 6px rgba(0, 100, 0, 0.2);
+}
+
+button[mat-button]:active {
+    transform: translateY(0);
+}
