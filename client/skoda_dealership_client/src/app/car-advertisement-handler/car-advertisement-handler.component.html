@@ -1,0 +1,88 @@
+<div class="form-container">
+    <form class="car-form" [formGroup]="carAdvertisementForm" (ngSubmit)="onSubmit()">
+      <!-- Car Model -->
+      <select formControlName="carModel" required [ngClass]="{'invalid-input': carAdvertisementForm.get('carModel')?.errors}">
+        <option disabled selected value="">Select car model</option>
+        <option *ngFor="let model of carModels" [value]="model">{{ model }}</option>
+      </select>
+      <div>
+        <i *ngIf="carAdvertisementForm.get('carModel')?.errors?.['required']">Car model type is required.</i>
+      </div>
+
+      <!-- Engine -->
+      <div>
+        <select formControlName="engine" type="select" placeholder="Engine type" required [ngClass]="{'invalid-input': carAdvertisementForm.get('engine')?.errors}">
+          <option disabled selected value="">Select engine type</option>
+          <option *ngFor="let engine of engineTypes" [value]="engine">{{ engine }}</option>
+        </select>
+        <div *ngIf="carAdvertisementForm.get('engine')?.invalid && (carAdvertisementForm.get('engine')?.dirty || carAdvertisementForm.get('engine')?.touched)">
+          <i *ngIf="carAdvertisementForm.get('engine')?.errors?.['required']">Engine type is required.</i>
+        </div>
+      </div>
+
+
+      <!-- Mileage -->
+      <input formControlName="mileage" type="range" min="0" max="300000" step="1000" placeholder="Mileage" required [ngClass]="{'invalid-input': carAdvertisementForm.get('mileage')?.errors}" />
+      <div class="rangeValue">Mileage: {{carAdvertisementForm.get('mileage')?.value}} km</div>
+      <div *ngIf="carAdvertisementForm.get('mileage')?.invalid && (carAdvertisementForm.get('mileage')?.dirty || carAdvertisementForm.get('mileage')?.touched)">
+        <i *ngIf="carAdvertisementForm.get('mileage')?.errors?.['required']">Mileage is required.</i>
+      </div>
+
+      <!-- Trim Level -->
+      <div>
+        <select formControlName="trimLevel" required [ngClass]="{'invalid-input': carAdvertisementForm.get('trimLevel')?.errors}">
+          <option disabled selected value="">Select trim level</option>
+          <option *ngFor="let trim of trimLevels" [value]="trim">{{ trim }}</option>
+        </select>
+        <div *ngIf="carAdvertisementForm.get('trimLevel')?.invalid && (carAdvertisementForm.get('trimLevel')?.dirty || carAdvertisementForm.get('trimLevel')?.touched)">
+          <i *ngIf="carAdvertisementForm.get('trimLevel')?.errors?.['required']">Trim level is required.</i>
+        </div>
+      </div>
+
+      <!-- Optional Service -->
+      <div>
+        <select formControlName="optionalService" [ngClass]="{'invalid-input': carAdvertisementForm.get('optionalService')?.errors}">
+          <option value="">(No additional service)</option>
+          <option *ngFor="let service of optionalServices" [value]="service">{{ service }}</option>
+        </select>
+      </div>
+
+      <input formControlName="price" type="range" min="0" max="15000000" step="50000" placeholder="Price (HUF)" required [ngClass]="{'invalid-input': carAdvertisementForm.get('price')?.errors}" />
+      <div class="rangeValue">Price: {{carAdvertisementForm.get('price')?.value}} HUF</div>
+      <div *ngIf="carAdvertisementForm.get('price')?.invalid && (carAdvertisementForm.get('price')?.dirty || carAdvertisementForm.get('price')?.touched)">
+        <i *ngIf="carAdvertisementForm.get('price')?.errors?.['required']">Price is required.</i>
+      </div>
+
+      <!-- Image -->
+      <div>
+        <select formControlName="image" required [ngClass]="{'invalid-input': carAdvertisementForm.get('image')?.errors}">
+          <option disabled selected value="">Select car image</option>
+          <option *ngFor="let image of availableImages" [value]="image">{{ image }}</option>
+        </select>
+        <div *ngIf="carAdvertisementForm.get('image')?.invalid && (carAdvertisementForm.get('image')?.dirty || carAdvertisementForm.get('image')?.touched)">
+          <i *ngIf="carAdvertisementForm.get('image')?.errors?.['required']">Image is required.</i>
+        </div>
+        <div class="image-preview" *ngIf="carAdvertisementForm.get('image')?.value">
+          <img [src]="carAdvertisementForm.get('image')?.value" alt="Selected car image" class="preview-image">
+        </div>
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="error-message">
+        <i>{{ errorMessage }}</i>
+      </div>
+
+      <!-- Buttons -->
+      <div class="buttons">
+        <button type="submit" [disabled]="carAdvertisementForm.invalid || isLoading">Save Advertisement</button>
+      </div>
+      <div class="buttons">
+        <button type="button" (click)="goBack()">Back</button>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div class="overlay" *ngIf="isLoading">
+        <mat-spinner class="custom-spinner"></mat-spinner>
+      </div>
+    </form>
+  </div>
