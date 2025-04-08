@@ -42,7 +42,7 @@
       <!-- Optional Service -->
       <div>
         <select formControlName="optionalService" [ngClass]="{'invalid-input': carAdvertisementForm.get('optionalService')?.errors}">
-          <option value="">(No additional service)</option>
+          <option value="">Select additional service</option>
           <option *ngFor="let service of optionalServices" [value]="service">{{ service }}</option>
         </select>
       </div>

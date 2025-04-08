@@ -5,7 +5,7 @@ export enum CarModel {
     Octavia = 'Octavia',
     Superb = 'Superb',
     Kodiaq = 'Kodiaq',
-    Enyaq = 'Enyaq'
+    Karoq = 'Karoq'
   }
 
   export enum TrimLevel {
@@ -16,6 +16,7 @@ export enum CarModel {
   }
 
   export enum OptionalService {
+    NoOptionalService = "Nincs extra szolgáltatás",
     OneYearWarranty = '1 év garancia',
     ThreeYearWarranty = '3 év garancia',
     SmallServiceDiscount = 'Kedvezményes kis szervíz',
@@ -34,7 +35,7 @@ export enum CarModel {
     engine: EngineType;
     mileage: number;
     trimLevel: TrimLevel;
-    optionalService?: OptionalService;
+    optionalService: OptionalService;
     image: string;
     price: number;
   }
@@ -44,7 +45,7 @@ const CarAdvertisementSchema: Schema<ICarAdvertisement> = new mongoose.Schema({
     engine: { type: String, enum: Object.values(EngineType) , required: true },
     mileage: { type: Number, required: true },
     trimLevel: { type: String, enum: Object.values(TrimLevel), required: true },
-    optionalService: { type: String,enum: Object.values(OptionalService), required: false},
+    optionalService: { type: String,enum: Object.values(OptionalService), required: true},
     image: { type: String, required: true },
     price: { type: Number, required: true }
 });

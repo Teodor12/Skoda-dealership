@@ -1,4 +1,4 @@
-interface CarAdvertisement{
+export interface CarAdvertisement{
     carModel: string;
     engine: string;
     mileage: number;

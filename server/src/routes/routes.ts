@@ -106,14 +106,13 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
     /********************* Endpoints for CarAdvertisements *********************/
 
     router.post('/addCarAdvertisement', (req: Request, res: Response) => {
-        if (req.isAuthenticated()) {
             const carAdvertisement = new CarAdvertisement({
                 carModel:req.body.carModel,
                 engine:req.body.engine,
                 mileage:req.body.mileage,
                 trimLevel:req.body.trimLevel,
                 optionalService:req.body.optionalService,
-                images:req.body.images,
+                image:req.body.image,
                 price:req.body.price
             });
             carAdvertisement.save().then(data => {
@@ -121,10 +120,7 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
             }).catch(error => {
                 res.status(500).send(error);
             })
-        } else {
-            res.status(401).send('Admin is not logged in.');
-        }
-    });
+        });
 
     router.get('/getAllCarAdvertisements', (req: Request, res: Response) => {
         if (req.isAuthenticated()) {
