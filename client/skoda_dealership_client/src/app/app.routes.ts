@@ -7,5 +7,6 @@ export const routes: Routes = [
     { path: 'login', loadComponent: () => import('./login/login.component').then((c) => c.LoginComponent) },
     { path: 'user-management', loadComponent: () => import('./user-management/user-management.component').then((c) => c.UserManagementComponent), canActivate: [authGuard] },
     { path: 'car-advertisement-handler', loadComponent: () => import('./car-advertisement-handler/car-advertisement-handler.component').then((c) => c.CarAdvertisementHandlerComponent)},
+    { path: 'car-advertisement-management', loadComponent: () =>  import('./car-advertisement-management/car-advertisement-management.component').then((c) => c.CarAdvertisementManagementComponent)},
     { path: '**', redirectTo: 'login' }
 ];

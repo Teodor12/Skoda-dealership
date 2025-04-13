@@ -34,6 +34,7 @@ export class UserManagementComponent {
     this.userService.getAll().subscribe({
       next: (data) => {
         this.users = data;
+        this.users[0]
         console.log(this.users);
       }, error: (err) => {
         console.log(err);

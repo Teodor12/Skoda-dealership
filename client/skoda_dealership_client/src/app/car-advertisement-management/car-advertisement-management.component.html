@@ -1,0 +1,80 @@
+<div class="container">
+  <nav class="green-navbar">
+    <ul>
+      <li><a routerLink="/dashboard" class="nav-link"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+      <li><a routerLink="/advertisements" class="nav-link active"><i class="fas fa-car"></i> Advertisements</a></li>
+      <li><a routerLink="/inventory" class="nav-link"><i class="fas fa-warehouse"></i> Inventory</a></li>
+      <li><a routerLink="/reports" class="nav-link"><i class="fas fa-chart-bar"></i> Reports</a></li>
+    </ul>
+  </nav>
+
+  <h1 style="text-align: center;">Car Advertisement Management</h1>
+
+  <div class="advertisementContainer">
+
+    <div class="advertisement-list">
+
+      <div *ngFor="let car of carAdvertisements; let i = index" class="car-card">
+
+        <div class="car-edit">
+          <form [formGroup]="carForms[i]" (ngSubmit)="onUpdate(i)" class="car-form">
+
+            <!-- Car Model and engine (Display Only) -->
+            <div>
+              <p><strong>{{carForms[i].value.carModel}} - {{carForms[i].value.trimLevel}}</strong></p>
+              <p><strong> {{carForms[i].value.engine}}</strong></p>
+            </div>
+
+            <!-- Mileage -->
+            <div>
+              <label>Mileage: {{ carForms[i].value.mileage }} km</label>
+              <input formControlName="mileage" type="range" min="0" max="5000" step="50" [ngClass]="{'invalid-input': carForms[i].get('mileage')?.invalid && carForms[i].get('mileage')?.dirty || carForms[i].get('mileage')?.touched}">
+            </div>
+
+            <!-- Trim Level -->
+            <div>
+              <label>Trim Level:</label>
+              <select formControlName="trimLevel" required [ngClass]="{'invalid-input': carForms[i].get('trimLevel')?.invalid && (carForms[i].get('trimLevel')?.dirty || carForms[i].get('trimLevel')?.touched)}">
+                <option *ngFor="let trim of trimLevelOptions" [value]="trim">{{ trim }}</option>
+              </select>
+            </div>
+
+            <!-- Optional Service -->
+            <div>
+              <label>Optional Service:</label>
+              <select formControlName="optionalService">
+                <option value="">None</option>
+                <option *ngFor="let service of optionalServiceOptions" [value]="service">{{ service }}</option>
+              </select>
+            </div>
+
+            <!-- Price -->
+            <div>
+              <label>Price: {{ carForms[i].value.price | currency:'HUF':'symbol':'1.0-0' }}</label>
+              <input formControlName="price" type="range" min="0" max="15000000" step="50000" [ngClass]="{'invalid-input': carForms[i].get('price')?.invalid && (carForms[i].get('price')?.dirty || carForms[i].get('price')?.touched)}">
+            </div>
+
+            <!-- Image -->
+            <div>
+              <label>Image:</label>
+              <select formControlName="image" required [ngClass]="{'invalid-input': carForms[i].get('image')?.invalid && (carForms[i].get('image')?.dirty || carForms[i].get('image')?.touched)}">
+                <option *ngFor="let image of availableImages" [value]="image">{{ image }}</option>
+              </select>
+            </div>
+
+            <!-- Update Button -->
+            <div class="buttons">
+              <button type="submit" [disabled]="carForms[i].invalid || !carForms[i].dirty"> Update Advertisement</button>
+            </div>
+
+            <!-- Delete Button -->
+            <div class="buttons">
+              <button type="button" (click)="onDelete(carForms[i].value._id)"> Delete Advertisement</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

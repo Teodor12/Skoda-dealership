@@ -123,35 +123,45 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         });
 
     router.get('/getAllCarAdvertisements', (req: Request, res: Response) => {
-        if (req.isAuthenticated()) {
-            const query = CarAdvertisement.find();
-            query.then(data => {
-                res.status(200).send(data);
-            }).catch(error => {
-                console.log(error);
-                res.status(500).send('Internal server error.');
-            })
-        } else {
-            res.status(401).send('Admin is not logged in.');
+        const query = CarAdvertisement.find();
+        query.then(data => {
+            res.status(200).send(data);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).send('Internal server error.');
+        })
+    });
+
+    router.put('/updateCarAdvertisement', (req: Request, res: Response) => {
+        const { _id, ...updateData } = req.body;
+        if (!_id) {
+            return res.status(400).send('Missing id parameter.');
         }
+        CarAdvertisement.findByIdAndUpdate(_id, updateData, { new: true }).then(updatedCar => {
+            if (!updatedCar) {
+                return res.status(404).send('Car advertisement not found.');
+            }
+            res.status(200).send(updatedCar);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).send('Internal server error.');
+        });
     });
 
     router.delete('/deleteCarAdvertisement',(req: Request, res: Response) => {
-        if (req.isAuthenticated()) {
-            const id = req.query.id;
-            if (!id) {
-                return res.status(400).send('Missing id parameter.');
-            }
-            const query = CarAdvertisement.deleteOne({_id: id});
-            query.then(data => {
-                res.status(200).send(data);
-            }).catch(error => {
-                console.log(error);
-                res.status(500).send('Internal server error.');
-            })
-        } else {
-            res.status(401).send('Admin is not logged in.');
+
+        const id = req.query.id;
+        console.log('router.delete ' + id)
+        if (!id) {
+            return res.status(401).send('Missing id parameter.');
         }
+        const query = CarAdvertisement.deleteOne({_id: id});
+        query.then(data => {
+            res.status(200).send(data);
+        }).catch(error => {
+            console.log(error);
+            res.status(500).send('Internal server error.');
+        })
     });
 
     return router;

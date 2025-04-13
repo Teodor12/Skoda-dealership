@@ -33,13 +33,14 @@ export class LoginComponent {
     this.authService.login(this.email, this.password).subscribe({
       next: (data: User) => {
         if (data.email === 'admin@gmail.com' && data.name === 'admin') {
+          console.log('setting currentUser to admin')
           localStorage.setItem('currentUser', 'admin');
         } else {
+          console.log('setting current user to ', data.email)
           localStorage.setItem('currentUser', data.email);
         }
         setTimeout(() => {
           this.isLoading = false;
-          console.log('admin is logged in');
         }, 1000);
       },
       error: (err) => {
@@ -47,6 +48,18 @@ export class LoginComponent {
           this.isLoading = false;
           this.errorMessage = err.message;
         }, 1000);
+      }
+    });
+  }
+
+  logout() {
+    this.authService.logout().subscribe({
+      next: (data) => {
+        console.log(data);
+        console.log('logout next is called')
+        localStorage.removeItem('currentUser')
+      }, error: (err) => {
+        console.log(err);
       }
     });
   }
