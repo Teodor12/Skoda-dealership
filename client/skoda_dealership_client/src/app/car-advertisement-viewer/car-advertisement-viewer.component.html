@@ -1,0 +1,124 @@
+<div class="container">
+  <nav class="green-navbar">
+    <ul>
+      <li>
+        <a routerLink="/dashboard" class="nav-link"
+          ><i class="fas fa-tachometer-alt"></i> Dashboard</a
+        >
+      </li>
+      <li>
+        <a routerLink="/advertisements" class="nav-link active"
+          ><i class="fas fa-car"></i> Advertisements</a
+        >
+      </li>
+      <li>
+        <a routerLink="/inventory" class="nav-link"
+          ><i class="fas fa-warehouse"></i> Inventory</a
+        >
+      </li>
+      <li>
+        <a routerLink="/reports" class="nav-link"
+          ><i class="fas fa-chart-bar"></i> Reports</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <h1>Tekintse meg kínalatunkat!</h1>
+  <p>{{ loggedInUserEmail }}</p>
+
+  <div class="viewerContainer">
+    <div class="filter-section">
+      <h2>Filter Options</h2>
+      <div class="filter-controls">
+        <div class="filter-group">
+          <label>Vételár: {{ priceFilter }} HUF</label>
+          <input
+            type="range"
+            [(ngModel)]="priceFilter"
+            min="0"
+            max="15000000"
+            step="50000"
+            (input)="applyFilters()"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label>Megtett kilométer: {{ mileageFilter }} km</label>
+          <input
+            type="range"
+            [(ngModel)]="mileageFilter"
+            min="0"
+            max="5000"
+            step="50"
+            (input)="applyFilters()"
+          />
+        </div>
+
+        <div class="filter-group">
+          <label>Modell:</label>
+          <select [(ngModel)]="modelFilter" (change)="applyFilters()">
+            <option value="">Összes modell</option>
+            <option *ngFor="let model of carModels" [value]="model">
+              {{ model }}
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="car-list">
+      <div
+        *ngFor="let car of filteredCarAdvertisements; let i = index"
+        class="car-card"
+      >
+        <div class="car-image">
+          <img [src]="car.image" [alt]="car.carModel" />
+        </div>
+
+        <div class="car-details">
+          <div class="car-details-header">
+            <h3>{{ car.carModel }}-{{ car.trimLevel }}</h3>
+          </div>
+          <p><strong>Motor:</strong> {{ car.engine }}</p>
+          <p><strong>Futásteljesítmény:</strong> {{ car.mileage }} km</p>
+          <p><strong>Extra szolgáltatás:</strong> {{ car.optionalService }}</p>
+          <p><strong>Ár:</strong> {{ car.price }} HUF</p>
+        </div>
+
+        <form
+          [formGroup]="testDriveForms[i]"
+          (ngSubmit)="onTestDriveSubmit(i)"
+          class="action-form"
+        >
+          <div class="car-actions">
+            <div class="action-section">
+              <button
+                type="submit"
+                class="action-btn test-drive-btn"
+                [disabled]="
+                  !testDriveForms[i].get('testDriveDate')?.touched ||
+                  !testDriveForms[i].get('testDriveDate')?.value
+                "
+              >
+                <i class="fas fa-car"></i> Időpont foglalás tesztvezetéshez
+              </button>
+              <div class="date-input">
+                <label>Teszt vezetés dátuma:</label>
+                <input
+                  type="date"
+                  [min]="minDate.toISOString().split('T')[0]"
+                  formControlName="testDriveDate"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" *ngIf="isLoading">
+    <mat-spinner class="custom-spinner"></mat-spinner>
+  </div>
+</div>

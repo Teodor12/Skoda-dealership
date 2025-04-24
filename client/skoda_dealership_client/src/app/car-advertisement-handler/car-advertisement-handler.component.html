@@ -22,7 +22,7 @@
 
 
       <!-- Mileage -->
-      <input formControlName="mileage" type="range" min="0" max="300000" step="1000" placeholder="Mileage" required [ngClass]="{'invalid-input': carAdvertisementForm.get('mileage')?.errors}" />
+      <input formControlName="mileage" type="range" min="0" max="5000" step="50" placeholder="Mileage" required [ngClass]="{'invalid-input': carAdvertisementForm.get('mileage')?.errors}" />
       <div class="rangeValue">Mileage: {{carAdvertisementForm.get('mileage')?.value}} km</div>
       <div *ngIf="carAdvertisementForm.get('mileage')?.invalid && (carAdvertisementForm.get('mileage')?.dirty || carAdvertisementForm.get('mileage')?.touched)">
         <i *ngIf="carAdvertisementForm.get('mileage')?.errors?.['required']">Mileage is required.</i>

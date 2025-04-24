@@ -1,0 +1,29 @@
+<div class="container">
+  <h1>Foglalt időpontok tesztvezetéshez:</h1>
+  <div class="testDrivesContainer">
+    <div class="testdrive-list">
+      <div *ngFor="let testDrive of testDrives" class="testdrive-card">
+        <div class="testdrive-header">
+          <h3>
+            {{ testDrive.testDriveDate | date : "yyyy.MM.dd" }} -
+            {{ testDrive.user.email }}
+          </h3>
+        </div>
+
+        <div class="testdrive-details">
+          <p><strong>Ügyfél név:</strong> {{ testDrive.user.name }}</p>
+          <p><strong>Telefonszám:</strong> {{ testDrive.user.phoneNumber }}</p>
+          <p>
+            <strong>Modell és felszereltség:</strong>
+            {{ testDrive.carAdvertisement.carModel }} -
+            {{ testDrive.carAdvertisement.engine }} -
+            {{ testDrive.carAdvertisement.trimLevel }}
+          </p>
+          <p>
+            <strong> Ár: </strong>{{ testDrive.carAdvertisement.price }} HUF
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

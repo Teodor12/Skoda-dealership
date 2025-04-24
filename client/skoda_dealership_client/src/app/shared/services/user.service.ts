@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { User } from '../model/User';
 import { MongoUser } from '../model/mongo/MongoUser';
 
 @Injectable({
@@ -12,6 +11,10 @@ export class UserService {
 
   getAll() {
     return this.http.get<MongoUser[]>('http://localhost:5000/app/getAllUsers', {withCredentials: true});
+  }
+
+  getUserByEmail(email: string){
+    return this.http.get<MongoUser>('http://localhost:5000/app/getUserByEmail?email=' + email, { withCredentials: true });
   }
 
   delete(_id: string) {

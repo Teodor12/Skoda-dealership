@@ -1,0 +1,76 @@
+.container {
+    height: 100vh;
+    margin: 0 auto;
+    background: linear-gradient(140deg,
+            #e8f3e8 0%,
+            #d0e6d0 50%,
+            #b8d9b8 100%);
+    padding: 20px;
+}
+
+h1 {
+    color: #2e7d32;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.testDrivesContainer {
+    background: linear-gradient(140deg,
+            #e8f3e8 0%,
+            #d0e6d0 50%,
+            #b8d9b8 100%);
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 6px 24px rgba(0, 100, 0, 0.08);
+}
+
+.testdrive-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 75px;
+    justify-items: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 10px;
+}
+
+.testdrive-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow:
+        0 6px 24px rgba(0, 100, 0, 0.08),
+        0 0 0 1px rgba(0, 0, 0, 0.04);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 380px;
+
+    &:hover {
+        transform: translateY(-5px);
+    }
+}
+
+.testdrive-header {
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #e0ebe0;
+
+    h3 {
+        margin: 0;
+        color: #1b5e20;
+        font-size: 1.4rem;
+    }
+}
+
+.testdrive-details {
+    p {
+      margin: 8px 0;
+      color: #555;
+
+      strong {
+        color: #2e7d32;
+      }
+    }
+  }

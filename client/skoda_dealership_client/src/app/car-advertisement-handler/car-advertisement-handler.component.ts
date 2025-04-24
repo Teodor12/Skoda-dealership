@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 import { CarAdvertisementService } from '../shared/services/car-advertisement.service';
 import { InfoDialogComponent } from '../shared/components/info-dialog/info-dialog.component';
+import { CarModel, EngineType, OptionalService, TrimLevel } from '../shared/constans/carAdvertisementConstants';
 
 @Component({
   selector: 'app-car-form',
@@ -43,10 +44,7 @@ export class CarAdvertisementHandlerComponent {
   isLoading = false;
   errorMessage = '';
 
-  constructor(private formBuilder:FormBuilder, private carAdvertisementService: CarAdvertisementService, private dialog: MatDialog)
-  {
-
-  }
+  constructor(private formBuilder:FormBuilder, private carAdvertisementService: CarAdvertisementService, private dialog: MatDialog) {}
 
   ngOnInit() {
       this.carAdvertisementForm = this.formBuilder.group({
@@ -86,36 +84,3 @@ export class CarAdvertisementHandlerComponent {
   }
 
 }
-
-export enum CarModel {
-  Fabia = 'Fabia',
-  Octavia = 'Octavia',
-  Superb = 'Superb',
-  Kodiaq = 'Kodiaq',
-  Karoq = 'Karoq'
-}
-
-export enum EngineType {
-  OneZeroTSI = "1.0 TSI",
-  OneFiveTSI = "1.5 TSI",
-  OneSixTDI = "1.6 TDI",
-  TwoZeroTDI = "2.0 TDI"
-}
-
-export enum TrimLevel {
-  Essence = 'Essence',
-  Selection = 'Selection',
-  LK = 'LK',
-  RS = 'RS'
-}
-
-export enum OptionalService {
-  NoOptionalService = "Nincs extra szolgáltatás",
-  OneYearWarranty = '1 év garancia',
-  ThreeYearWarranty = '3 év garancia',
-  SmallServiceDiscount = 'Kedvezményes kis szervíz',
-  LargeServiceDiscount = 'Kedvezményes nagy szervíz'
-}
-
-
-

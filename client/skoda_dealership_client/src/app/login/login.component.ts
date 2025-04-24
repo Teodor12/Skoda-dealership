@@ -56,7 +56,6 @@ export class LoginComponent {
     this.authService.logout().subscribe({
       next: (data) => {
         console.log(data);
-        console.log('logout next is called')
         localStorage.removeItem('currentUser')
       }, error: (err) => {
         console.log(err);

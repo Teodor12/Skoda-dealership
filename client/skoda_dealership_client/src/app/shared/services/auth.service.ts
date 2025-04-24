@@ -31,7 +31,6 @@ export class AuthService {
   }
 
   register(user: User) {
-    // HTTP POST request
     const body = new URLSearchParams();
     body.set('email', user.email);
     body.set('password', user.password);

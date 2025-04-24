@@ -9,6 +9,6 @@ export const routes: Routes = [
     { path: 'car-advertisement-handler', loadComponent: () => import('./car-advertisement-handler/car-advertisement-handler.component').then((c) => c.CarAdvertisementHandlerComponent)},
     { path: 'car-advertisement-management', loadComponent: () =>  import('./car-advertisement-management/car-advertisement-management.component').then((c) => c.CarAdvertisementManagementComponent)},
     { path: 'car-advertisement-viewer', loadComponent: () =>  import('./car-advertisement-viewer/car-advertisement-viewer.component').then((c) => c.CarAdvertisementViewerComponent)},
-
+    { path: 'testdrive-viewer', loadComponent: () =>  import('./testdrive-viewer/testdrive-viewer.component').then((c) => c.TestdriveViewerComponent)},
     { path: '**', redirectTo: 'login' }
 ];
