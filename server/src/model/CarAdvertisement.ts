@@ -1,36 +1,7 @@
 import mongoose, { Document, Model, Schema } from 'mongoose';
+import { CarModel, EngineType, OptionalService, TrimLevel } from '../constants/carAdvertisementConstants';
 
-export enum CarModel {
-    Fabia = 'Fabia',
-    Octavia = 'Octavia',
-    Superb = 'Superb',
-    Kodiaq = 'Kodiaq',
-    Karoq = 'Karoq'
-  }
-
-  export enum TrimLevel {
-    Essence = 'Essence',
-    Selection = 'Selection',
-    LK = 'LK',
-    RS = 'RS'
-  }
-
-  export enum OptionalService {
-    NoOptionalService = "Nincs extra szolgáltatás",
-    OneYearWarranty = '1 év garancia',
-    ThreeYearWarranty = '3 év garancia',
-    SmallServiceDiscount = 'Kedvezményes kis szervíz',
-    LargeServiceDiscount = 'Kedvezményes nagy szervíz'
-  }
-
-  export enum EngineType {
-    OneZeroTSI = "1.0 TSI",
-    OneFiveTSI = "1.5 TSI",
-    OneSixTDI = "1.6 TDI",
-    TwoZeroTDI = "2.0 TDI"
-  }
-
-  interface ICarAdvertisement extends Document {
+export interface ICarAdvertisement extends Document {
     carModel: CarModel;
     engine: EngineType;
     mileage: number;
