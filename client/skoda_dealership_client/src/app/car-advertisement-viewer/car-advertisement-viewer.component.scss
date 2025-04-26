@@ -1,20 +1,19 @@
 .container {
-    height: 100vh;
-    margin: 0 auto;
-    background: #e0ebe0;
-    background: linear-gradient(
-        140deg,
-        #e8f3e8 0%,  // Light green-grey
-        #d0e6d0 50%, // Medium green-grey
-        #b8d9b8 100% // More green tone
+  height: 100vh;
+  margin: 0 auto;
+  background: #e0ebe0;
+  background: linear-gradient(140deg,
+      #e8f3e8 0%, // Light green-grey
+      #d0e6d0 50%, // Medium green-grey
+      #b8d9b8 100% // More green tone
     );
 }
 
 h1 {
-    color: #2e7d32;
-    margin-bottom: 30px;
-    text-align: center;
-    font-weight: 600;
+  color: #2e7d32;
+  margin-bottom: 30px;
+  text-align: center;
+  font-weight: 600;
 }
 
 .green-navbar {
@@ -62,12 +61,10 @@ h1 {
 }
 
 .viewerContainer {
-  background: linear-gradient(
-    140deg,
-    #e8f3e8 0%,
-    #d0e6d0 50%,
-    #b8d9b8 100%
-  );
+  background: linear-gradient(140deg,
+      #e8f3e8 0%,
+      #d0e6d0 50%,
+      #b8d9b8 100%);
   border-radius: 12px;
   padding: 20px;
   box-shadow: 0 6px 24px rgba(0, 100, 0, 0.08);
@@ -127,6 +124,7 @@ h1 {
   box-shadow: 0 6px 24px rgba(0, 100, 0, 0.08), 0 0 0 1px rgba(0, 0, 0, 0.04);
   transition: transform 0.3s ease;
   width: 80%;
+
   &:hover {
     transform: translateY(-5px);
   }
@@ -198,6 +196,30 @@ h1 {
   }
 }
 
+.appointmentType-input {
+  label {
+    font-size: 14px;
+    color: #2e7d32;
+    font-weight: 500;
+  }
+}
+
+.appointmentType-input select {
+  padding: 10px 14px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  outline: none;
+  font-size: 15px;
+  width: 100%;
+  transition: all 0.2s ease;
+  background-color: #fff;
+}
+
+.appointmentType-input select:focus {
+  border-color: #5cb85c;
+  box-shadow: 0 0 0 3px rgba(92, 184, 92, 0.2);
+}
+
 .action-btn {
   padding: 10px;
   border: none;
@@ -234,11 +256,21 @@ h1 {
   }
 
   &.appointment-btn {
-    background-color: #337ab7;
+    background-color: #4499e4;
     color: white;
 
     &:hover {
-      background-color: #286090;
+      background-color: #408ccf;
+    }
+
+    &:hover:not(:disabled) {
+      background-color: #408ccf;
+    }
+
+    &:disabled {
+      background-color: #326897;
+      cursor: not-allowed;
+      opacity: 0.85;
     }
   }
 }
@@ -262,8 +294,17 @@ h1 {
 }
 
 @keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.2); opacity: 0.7; }
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
 }
 
 @media (max-width: 768px) {

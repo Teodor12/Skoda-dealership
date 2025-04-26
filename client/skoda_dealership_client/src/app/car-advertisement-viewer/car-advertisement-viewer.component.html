@@ -29,7 +29,7 @@
 
   <div class="viewerContainer">
     <div class="filter-section">
-      <h2>Filter Options</h2>
+      <h2>Szűrőfeltételek:</h2>
       <div class="filter-controls">
         <div class="filter-group">
           <label>Vételár: {{ priceFilter }} HUF</label>
@@ -90,16 +90,14 @@
           [formGroup]="testDriveForms[i]"
           (ngSubmit)="onTestDriveSubmit(i)"
           class="action-form"
+          *ngIf="loggedInUser"
         >
           <div class="car-actions">
             <div class="action-section">
               <button
                 type="submit"
                 class="action-btn test-drive-btn"
-                [disabled]="
-                  !testDriveForms[i].get('testDriveDate')?.touched ||
-                  !testDriveForms[i].get('testDriveDate')?.value
-                "
+                [disabled]="!testDriveForms[i].get('testDriveDate')?.value"
               >
                 <i class="fas fa-car"></i> Időpont foglalás tesztvezetéshez
               </button>
@@ -109,6 +107,47 @@
                   type="date"
                   [min]="minDate.toISOString().split('T')[0]"
                   formControlName="testDriveDate"
+                />
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <form
+          [formGroup]="appointmentForms[i]"
+          (ngSubmit)="onAppointmentSubmit(i)"
+          class="action-form"
+          *ngIf="loggedInUser"
+        >
+          <div class="car-actions">
+            <div class="action-section">
+              <button
+                type="submit"
+                class="action-btn appointment-btn"
+                [disabled]="
+                  !appointmentForms[i].get('appointmentType')?.value ||
+                  !appointmentForms[i].get('appointmentDate')?.value
+                "
+              >
+                <i class="fas fa-car"></i> Időpont foglalás a szolgáltatáshoz
+              </button>
+
+              <div class="appointmentType-input">
+                <label>Szolgáltatás</label>
+                <select formControlName="appointmentType">
+                  <option value="">Nincs szolgáltatás kiválasztva</option>
+                  <option *ngFor="let type of appointmentTypes" [value]="type">
+                    {{ type }}
+                  </option>
+                </select>
+              </div>
+
+              <div class="date-input">
+                <label>Időpont dátuma:</label>
+                <input
+                  type="date"
+                  [min]="minDate.toISOString().split('T')[0]"
+                  formControlName="appointmentDate"
                 />
               </div>
             </div>

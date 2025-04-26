@@ -25,12 +25,10 @@ export class TestDriveService {
       'Content-Type': 'application/x-www-form-urlencoded'
     });
 
-    console.log(JSON.stringify(testDrive, null, 2));
-
     return this.http.post('http://localhost:5000/app/addTestDrive', body, {headers: headers});
   }
 
   getAll() {
     return this.http.get<MongoTestDrive[]>('http://localhost:5000/app/getAllTestDrives', {withCredentials: true});
-}
+  }
 }

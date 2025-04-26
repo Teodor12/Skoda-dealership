@@ -1,0 +1,30 @@
+<div class="container">
+    <h1>Foglalt időpontok:</h1>
+    <div class="appointmentContainer">
+      <div class="appointment-list">
+        <div *ngFor="let appointment of appointments" class="appointment-card">
+          <div class="appointment-header">
+            <h2> {{ appointment.appointmentType }} </h2>
+            <h3>
+              {{ appointment.appointmentDate | date : "yyyy.MM.dd" }} -
+              {{ appointment.user.email }}
+            </h3>
+          </div>
+  
+          <div class="appointment-details">
+            <p><strong>Ügyfél név:</strong> {{ appointment.user.name }}</p>
+            <p><strong>Telefonszám:</strong> {{ appointment.user.phoneNumber }}</p>
+            <p>
+              <strong>Modell és felszereltség:</strong>
+              {{ appointment.carAdvertisement.carModel }} -
+              {{ appointment.carAdvertisement.engine }} -
+              {{ appointment.carAdvertisement.trimLevel }}
+            </p>
+            <p>
+              <strong> Ár: </strong>{{ appointment.carAdvertisement.price }} HUF
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
