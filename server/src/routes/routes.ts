@@ -3,6 +3,7 @@ import { PassportStatic } from "passport";
 import { User } from "../model/User";
 import { CarAdvertisement } from "../model/CarAdvertisement";
 import { TestDrive } from "../model/TestDrive";
+import { Appointment } from "../model/Appointment";
 
 export const configureRoutes = (
   passport: PassportStatic,
@@ -214,7 +215,6 @@ export const configureRoutes = (
   /********************* Endpoints for TestDrives *********************/
 
   router.post("/addTestDrive", (req: Request, res: Response) => {
-    console.log("posting to /addTestDrive");
     const { user, carAdvertisement, testDriveDate } = req.body;
 
     if (!user || !carAdvertisement || !testDriveDate) {
@@ -240,6 +240,46 @@ export const configureRoutes = (
     console.log("GET /getAllTestDrives called");
 
     TestDrive.find()
+      .populate("user")
+      .populate("carAdvertisement")
+      .then((data) => {
+        res.status(200).send(data);
+      })
+      .catch((error) => {
+        console.error("Error fetching test drives:", error);
+        res.status(500).send("Internal server error.");
+      });
+  });
+
+  /********************* Endpoints for Appointments *********************/
+  router.post("/addAppointment", (req: Request, res: Response) => {
+    const { user, carAdvertisement, appointmentDate, appointmentType } = req.body;
+
+    if (!user || !carAdvertisement || !appointmentDate || !appointmentType) {
+      return res.status(400).send("Missing required fields");
+    }
+
+    const newAppointment = new Appointment({
+      user,
+      carAdvertisement,
+      appointmentDate: new Date(appointmentDate),
+      appointmentType,
+    });
+
+    newAppointment
+      .save()
+      .then((data) => {
+        res.status(200).send(data);
+      })
+      .catch((error) => {
+        res.status(500).send(error);
+      });
+  });
+
+  router.get("/getAllAppointments", (req: Request, res: Response) => {
+    console.log("GET /getAllAppointments called");
+
+    Appointment.find()
       .populate("user")
       .populate("carAdvertisement")
       .then((data) => {
