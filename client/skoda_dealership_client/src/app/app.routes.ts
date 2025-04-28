@@ -11,5 +11,6 @@ export const routes: Routes = [
     { path: 'car-advertisement-viewer', loadComponent: () =>  import('./car-advertisement-viewer/car-advertisement-viewer.component').then((c) => c.CarAdvertisementViewerComponent)},
     { path: 'testdrive-viewer', loadComponent: () =>  import('./testdrive-viewer/testdrive-viewer.component').then((c) => c.TestdriveViewerComponent)},
     { path: 'appointment-viewer', loadComponent: () => import('./appointment-viewer/appointment-viewer.component').then((c) => c.AppointmentViewerComponent)},
+    { path: 'my-profile', loadComponent: () =>  import('./my-profile/my-profile.component').then((c) => c.MyProfileComponent)},
     { path: '**', redirectTo: 'login' }
 ];

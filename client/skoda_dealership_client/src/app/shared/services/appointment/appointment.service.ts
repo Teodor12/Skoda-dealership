@@ -25,8 +25,12 @@ export class AppointmentService {
 
       return this.http.post('http://localhost:5000/app/addAppointment', body, {headers: headers});
     }
-  
+
   getAll() {
     return this.http.get<MongoAppointment[]>('http://localhost:5000/app/getAllAppointments', {withCredentials: true});
+  }
+
+  delete(_id:string) {
+    return this.http.delete('http://localhost:5000/app/deleteAppointment?id=' + _id, {withCredentials: true});
   }
 }

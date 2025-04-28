@@ -1,0 +1,96 @@
+<div class="container">
+  <h1>Profilom:</h1>
+  <div class="profileCard">
+    <div class="profile-header">
+      <h2 class="user-name">{{ loggedInUser?.name }} profilja:</h2>
+    </div>
+
+    <div class="profile-info">
+      <p><strong>Email:</strong> {{ loggedInUser?.email }}</p>
+      <p><strong>Telefonszám:</strong> {{ loggedInUser?.phoneNumber }}</p>
+    </div>
+
+    <div class="buttons">
+      <button type="button" class="logout-button" (click)="logout()">
+        Kijelentkezés
+      </button>
+    </div>
+  </div>
+
+  <h2 style="margin-top: 45px">Tesztvezetések:</h2>
+
+  <table *ngIf="testDrives.length > 0" class="testdrive-table">
+    <thead>
+      <tr>
+        <th>Dátum</th>
+        <th>Modell</th>
+        <th>Motor</th>
+        <th>Felszereltség</th>
+        <th>Ár [HUF]</th>
+        <th>Művelet</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let testDrive of testDrives; let i = index">
+        <td>{{ testDrive.testDriveDate | date : "yyyy.MM.dd" }}</td>
+        <td>{{ testDrive.carAdvertisement.carModel }}</td>
+        <td>{{ testDrive.carAdvertisement.engine }}</td>
+        <td>{{ testDrive.carAdvertisement.trimLevel }}</td>
+        <td>{{ testDrive.carAdvertisement.price }}</td>
+        <td>
+          <button
+            class="delete-button"
+            (click)="deleteTestDrive(testDrive._id)"
+          >
+            Lemond
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="testDrives.length == 0" class="noTestDriveDiv">
+    <p><strong> Jelenleg nincs időpont foglalva tesztvezetéshez.</strong></p>
+  </div>
+
+  <h2 style="margin-top: 45px">Foglalt időpontok:</h2>
+  <table *ngIf="appointments.length > 0" class="appointment-table">
+    <thead>
+      <tr>
+        <th>Dátum</th>
+        <th>Tárgy</th>
+        <th>Modell</th>
+        <th>Motor</th>
+        <th>Felszereltség</th>
+        <th>Ár [HUF]</th>
+        <th>Művelet</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appointment of appointments; let i = index">
+        <td>{{ appointment.appointmentDate | date : "yyyy.MM.dd" }}</td>
+        <td>{{ appointment.appointmentType }}</td>
+        <td>{{ appointment.carAdvertisement.carModel }}</td>
+        <td>{{ appointment.carAdvertisement.engine }}</td>
+        <td>{{ appointment.carAdvertisement.trimLevel }}</td>
+        <td>{{ appointment.carAdvertisement.price }}</td>
+        <td>
+          <button
+            class="delete-button"
+            (click)="deleteAppointment(appointment._id)"
+          >
+            Lemond
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="appointments.length == 0" class="noAppointmentDiv">
+    <p><strong> Jelenleg nincs időpont foglalva ügyintézéshez. </strong></p>
+  </div>
+
+  <div class="overlay" *ngIf="isLoading">
+    <mat-spinner class="custom-spinner"></mat-spinner>
+  </div>
+</div>

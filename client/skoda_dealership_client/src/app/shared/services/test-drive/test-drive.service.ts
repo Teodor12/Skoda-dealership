@@ -9,7 +9,6 @@ import { MongoTestDrive } from '../../model/mongo/MongoTestDrive';
 })
 export class TestDriveService {
 
-  private apiUrl = 'http://localhost:5000/app';
 
   constructor(private http: HttpClient) { }
 
@@ -30,5 +29,9 @@ export class TestDriveService {
 
   getAll() {
     return this.http.get<MongoTestDrive[]>('http://localhost:5000/app/getAllTestDrives', {withCredentials: true});
+  }
+
+  delete(_id:string) {
+    return this.http.delete('http://localhost:5000/app/deleteTestDrive?id=' + _id, {withCredentials: true});
   }
 }
