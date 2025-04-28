@@ -207,7 +207,6 @@ export const configureRoutes = (
         res.status(200).send(data);
       })
       .catch((error) => {
-        console.log(error);
         res.status(500).send("Internal server error.");
       });
   });
@@ -251,6 +250,22 @@ export const configureRoutes = (
       });
   });
 
+  router.delete("/deleteTestDrive", (req: Request, res: Response) => {
+    console.log("DELETE /deleteTestDrive called");
+    const id = req.query.id;
+    if (!id) {
+      return res.status(401).send("Missing id parameter.");
+    }
+    const query = TestDrive.deleteOne({ _id: id });
+    query.then((data) => {
+      res.status(200).send(data);
+    })
+      .catch((error) => {
+        res.status(500).send(error);
+
+      });
+  });
+
   /********************* Endpoints for Appointments *********************/
   router.post("/addAppointment", (req: Request, res: Response) => {
     const { user, carAdvertisement, appointmentDate, appointmentType } = req.body;
@@ -288,6 +303,22 @@ export const configureRoutes = (
       .catch((error) => {
         console.error("Error fetching test drives:", error);
         res.status(500).send("Internal server error.");
+      });
+  });
+
+  router.delete("/deleteAppointment", (req: Request, res: Response) => {
+    console.log("DELETE /deleteAppointment called");
+    const id = req.query.id;
+    if (!id) {
+      return res.status(401).send("Missing id parameter.");
+    }
+    const query = Appointment.deleteOne({ _id: id });
+    query.then((data) => {
+      res.status(200).send(data);
+    })
+      .catch((error) => {
+        res.status(500).send(error);
+
       });
   });
 
