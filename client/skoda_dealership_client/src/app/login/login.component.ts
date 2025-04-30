@@ -4,7 +4,10 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { User } from '../shared/model/User';
+import { MatDialog } from '@angular/material/dialog';
+import { ErrorDialogComponent } from '../shared/components/error-dialog/error-dialog.component';
+import { InfoDialogComponent } from '../shared/components/info-dialog/info-dialog.component';
+import { MongoUser } from '../shared/model/mongo/MongoUser';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +22,7 @@ export class LoginComponent {
   errorMessage: string = '';
   isLoading = false;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(private router: Router, private authService: AuthService, private dialog:MatDialog) { }
 
   login() {
     this.isLoading = true;
@@ -31,22 +34,32 @@ export class LoginComponent {
     }
 
     this.authService.login(this.email, this.password).subscribe({
-      next: (data: User) => {
-        if (data.email === 'admin@gmail.com' && data.name === 'admin') {
+      next: (data) => {
+        const sessionUser:MongoUser = data.user
+        if (sessionUser.email === 'admin@gmail.com' && sessionUser.name === 'admin') {
           console.log('setting currentUser to admin')
           localStorage.setItem('currentUser', 'admin');
         } else {
-          console.log('setting current user to ', data.email)
-          localStorage.setItem('currentUser', data.email);
+          console.log('setting current user to ', sessionUser.email)
+          localStorage.setItem('currentUser', sessionUser.email);
         }
         setTimeout(() => {
+          const dialogRef = this.dialog.open(InfoDialogComponent, {data:'Sikeresen bejelentkeztél!'})
           this.isLoading = false;
         }, 1000);
       },
       error: (err) => {
         setTimeout(() => {
           this.isLoading = false;
-          this.errorMessage = err.message;
+          if(err.status === 400) {
+            const message = err.error?.message;
+            if (message === 'User not found') {
+              this.dialog.open(ErrorDialogComponent, { data: 'Ezzel az e-mail címmel még nem regisztráltak!' });
+            } else if (message === 'Incorrect password') {
+              this.dialog.open(ErrorDialogComponent, { data: 'Helytelen jelszó!' });
+            } else {
+              this.dialog.open(ErrorDialogComponent, { data: 'Hiba történt a bejelentkezés során.' });
+            }          }
         }, 1000);
       }
     });

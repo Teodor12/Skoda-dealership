@@ -5,8 +5,7 @@ import { AuthService } from '../shared/services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../shared/components/error-dialog/error-dialog.component';
-
-// FormsModule, ReactiveFormsModule
+import { InfoDialogComponent } from '../shared/components/info-dialog/info-dialog.component';
 
 @Component({
   selector: 'app-signup',
@@ -96,7 +95,6 @@ export class SignupComponent implements OnInit {
     const phoneNumberErrors: any = {};
 
     if (!hasPrefix) {
-      console.log('invalid prefix')
       phoneNumberErrors['prefix'] = true;
     }
     if (!isValidLength) {
@@ -117,11 +115,12 @@ export class SignupComponent implements OnInit {
           console.log(data);
           setTimeout(() => {
             this.isSigningUp = false
+            const dialogRef = this.dialog.open(InfoDialogComponent, {data:'Sikeres regisztráció!'})
           }, 1000);
         }, error: (err) => {
-          if(err.status === 400) {
+          if(err.status === 409) {
             setTimeout(() => {
-              this.errorMessage = "Email already in use."
+              const dialogRef = this.dialog.open(ErrorDialogComponent, {data:'Ez az e-mail cím már foglalt!'})
               this.isSigningUp = false;
             }, 1000);
           }
@@ -130,7 +129,7 @@ export class SignupComponent implements OnInit {
     } else {
       setTimeout(() => {
         this.isSigningUp = false;
-        const dialogRef = this.dialog.open(ErrorDialogComponent, {data:'Insert the required fields.'})
+        const dialogRef = this.dialog.open(ErrorDialogComponent, {data:'Érvénytelen adatok!'})
       }, 1000);
     }
   }

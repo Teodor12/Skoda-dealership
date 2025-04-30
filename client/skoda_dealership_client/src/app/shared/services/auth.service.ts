@@ -19,15 +19,7 @@ export class AuthService {
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'
     });
-    return this.http.post(`${this.apiUrl}/login`, body, {headers:headers, withCredentials: true }).pipe(
-      catchError((error) => {
-        let errorMessage = 'Something went wrong. Please try again.';
-        if (error.status === 400 && error.error?.message) {
-          errorMessage = error.error.message;
-        }
-        return throwError(() => new Error(errorMessage));
-      })
-    );
+    return this.http.post(`${this.apiUrl}/login`, body, {headers:headers, withCredentials: true});
   }
 
   register(user: User) {
