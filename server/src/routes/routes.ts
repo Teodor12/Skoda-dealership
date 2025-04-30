@@ -16,39 +16,31 @@ export const configureRoutes = (
   /********************* Endpoints for Authentication *********************/
 
   router.post("/login", (req: Request, res: Response, next: NextFunction) => {
-    passport.authenticate(
-      "local",
-      (
-        error: Error | null,
-        user: typeof User | false,
-        info?: { message: string }
-      ) => {
-        if (error) {
-          return res.status(500).json({ message: "Internal server error." });
-        }
-
-        if (!user) {
-          return res
-            .status(400)
-            .json({ message: info?.message || "User not found." });
-        }
-
-        req.login(user, (err: Error | null) => {
-          if (err) {
-            console.error(err);
-            return res.status(500).json({ message: "Internal server error." });
-          } else {
-            return res.status(200).json(user);
-          }
-        });
+    passport.authenticate('local', (error: any, user: any, info?: { message?: string }) => {
+      if (error) {
+        console.error(error);
+        return res.status(500).send({ message: 'Internal server error', error });
       }
-    )(req, res, next);
+      if (!user) {
+        // Failed login: send the correct reason
+        return res.status(400).send({ message: info?.message || 'Authentication failed' });
+      }
+
+      req.login(user, (err) => {
+        if (err) {
+          console.error(err);
+          return res.status(500).send({ message: 'Login failed' });
+        }
+        console.log('/login returning 200');
+        return res.status(200).send({ message: 'Login successful', user });
+      });
+    })(req, res, next);
   });
 
   router.post("/register", async (req: Request, res: Response) => {
     User.findOne({ email: req.body.email }).then((existingUser) => {
       if (existingUser) {
-        return res.status(400).json({ message: "Email is already in use." });
+        return res.status(409).send("Email is already in use.");
       }
 
       const user = new User({
@@ -78,7 +70,7 @@ export const configureRoutes = (
         res.status(200).send("Successfully logged out.");
       });
     } else {
-      res.status(500).send("User is not logged in.");
+      res.status(400).send("User is not logged in.");
     }
   });
 
@@ -112,7 +104,7 @@ export const configureRoutes = (
     if (!email || typeof email !== "string") {
       return res
         .status(400)
-        .json({ message: "Email is required and must be a string." });
+        .json("Email is required and must be a string.");
     }
     const query = User.findOne({ email });
     query
