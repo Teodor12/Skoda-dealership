@@ -16,6 +16,7 @@ import { ErrorDialogComponent } from '../shared/components/error-dialog/error-di
 import { AppointmentType } from '../shared/constans/appointmentConstants';
 import { Appointment } from '../shared/model/Appointment';
 import { AppointmentService } from '../shared/services/appointment/appointment.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-car-advertisement-viewer',
@@ -25,10 +26,12 @@ import { AppointmentService } from '../shared/services/appointment/appointment.s
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
+    RouterModule
   ],
   templateUrl: './car-advertisement-viewer.component.html',
   styleUrls: ['./car-advertisement-viewer.component.scss'],
 })
+
 export class CarAdvertisementViewerComponent {
   testDriveForms!: FormGroup[];
   appointmentForms!: FormGroup[];
@@ -69,6 +72,7 @@ export class CarAdvertisementViewerComponent {
   }
 
   constructor(
+    private router: Router,
     private fb: FormBuilder,
     private userService: UserService,
     private carAdvertisementService: CarAdvertisementService,
@@ -168,7 +172,6 @@ export class CarAdvertisementViewerComponent {
 
     this.appointmentService.addAppointment(newAppointment).subscribe({
       next: (data) => {
-        console.log(data);
         setTimeout(() => {
           this.isLoading = false;
           const dialogRef = this.dialog.open(InfoDialogComponent, {

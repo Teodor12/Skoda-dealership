@@ -45,6 +45,9 @@ export class LoginComponent {
         }
         setTimeout(() => {
           const dialogRef = this.dialog.open(InfoDialogComponent, {data:'Sikeresen bejelentkeztél!'})
+          dialogRef.afterClosed().subscribe(() => {
+            this.router.navigateByUrl('/my-profile');
+          });
           this.isLoading = false;
         }, 1000);
       },

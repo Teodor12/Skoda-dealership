@@ -6,11 +6,12 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDialog } from '@angular/material/dialog';
 import { ErrorDialogComponent } from '../shared/components/error-dialog/error-dialog.component';
 import { InfoDialogComponent } from '../shared/components/info-dialog/info-dialog.component';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, CommonModule, RouterModule, MatProgressSpinnerModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
@@ -20,6 +21,7 @@ export class SignupComponent implements OnInit {
   isSigningUp = false;
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
     private location: Location,
     private authService: AuthService,
@@ -116,6 +118,9 @@ export class SignupComponent implements OnInit {
           setTimeout(() => {
             this.isSigningUp = false
             const dialogRef = this.dialog.open(InfoDialogComponent, {data:'Sikeres regisztráció!'})
+            dialogRef.afterClosed().subscribe(() => {
+              this.router.navigateByUrl('/login');
+            });
           }, 1000);
         }, error: (err) => {
           if(err.status === 409) {

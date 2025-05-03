@@ -45,7 +45,7 @@ export class MyProfileComponent {
         next: (user) => {
           this.loggedInUser = user;
           console.log(JSON.stringify(this.loggedInUser));
-          if(this.loggedInUser.email === 'admin@gmail.com') {
+          if (this.loggedInUser.email === 'admin@gmail.com') {
             this.isAdmin = true
             return;
           }
@@ -78,6 +78,9 @@ export class MyProfileComponent {
           this.isLoading = false;
           const dialogRef = this.dialog.open(InfoDialogComponent, {
             data: 'Sikeresen kijelentkeztél.',
+          });
+          dialogRef.afterClosed().subscribe(() => {
+            this.router.navigateByUrl('/login');
           });
         }, 1000);
       }, error: (err) => {
