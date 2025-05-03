@@ -31,7 +31,6 @@ export const configureRoutes = (
           console.error(err);
           return res.status(500).send({ message: 'Login failed' });
         }
-        console.log('/login returning 200');
         return res.status(200).send({ message: 'Login successful', user });
       });
     })(req, res, next);
@@ -123,7 +122,6 @@ export const configureRoutes = (
       const query = User.deleteOne({ _id: id });
       query
         .then((data) => {
-          console.log(data);
           res.status(200).send(data);
         })
         .catch((error) => {
@@ -189,7 +187,6 @@ export const configureRoutes = (
 
   router.delete("/deleteCarAdvertisement", (req: Request, res: Response) => {
     const id = req.query.id;
-    console.log("router.delete " + id);
     if (!id) {
       return res.status(401).send("Missing id parameter.");
     }
@@ -228,8 +225,6 @@ export const configureRoutes = (
   });
 
   router.get("/getAllTestDrives", (req: Request, res: Response) => {
-    console.log("GET /getAllTestDrives called");
-
     TestDrive.find()
       .populate("user")
       .populate("carAdvertisement")
@@ -243,7 +238,6 @@ export const configureRoutes = (
   });
 
   router.delete("/deleteTestDrive", (req: Request, res: Response) => {
-    console.log("DELETE /deleteTestDrive called");
     const id = req.query.id;
     if (!id) {
       return res.status(401).send("Missing id parameter.");
@@ -284,8 +278,6 @@ export const configureRoutes = (
   });
 
   router.get("/getAllAppointments", (req: Request, res: Response) => {
-    console.log("GET /getAllAppointments called");
-
     Appointment.find()
       .populate("user")
       .populate("carAdvertisement")
@@ -299,7 +291,6 @@ export const configureRoutes = (
   });
 
   router.delete("/deleteAppointment", (req: Request, res: Response) => {
-    console.log("DELETE /deleteAppointment called");
     const id = req.query.id;
     if (!id) {
       return res.status(401).send("Missing id parameter.");
