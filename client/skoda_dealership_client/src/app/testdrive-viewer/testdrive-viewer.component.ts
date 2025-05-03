@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 
 import { TestDriveService } from '../shared/services/test-drive/test-drive.service';
 import { MongoTestDrive } from '../shared/model/mongo/MongoTestDrive';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-testdrive-viewer',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './testdrive-viewer.component.html',
   styleUrl: './testdrive-viewer.component.scss',
 })

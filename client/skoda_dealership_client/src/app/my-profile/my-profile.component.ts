@@ -12,12 +12,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { InfoDialogComponent } from '../shared/components/info-dialog/info-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ErrorDialogComponent } from '../shared/components/error-dialog/error-dialog.component';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatProgressSpinnerModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './my-profile.component.html',
   styleUrl: './my-profile.component.scss'
 })
@@ -31,7 +31,8 @@ export class MyProfileComponent {
   testDriveForms!: FormGroup[];
   appointmentForms!: FormGroup[];
 
-  isLoading = false
+  isAdmin = false;
+  isLoading = false;
 
   constructor(private router: Router, private authService: AuthService, private userService: UserService, private testDriveService: TestDriveService, private appointmentService: AppointmentService, private fb: FormBuilder, private dialog: MatDialog
   ) { }
@@ -44,6 +45,10 @@ export class MyProfileComponent {
         next: (user) => {
           this.loggedInUser = user;
           console.log(JSON.stringify(this.loggedInUser));
+          if(this.loggedInUser.email === 'admin@gmail.com') {
+            this.isAdmin = true
+            return;
+          }
 
           // Query the user's test drives, create forms
           this.testDriveService.getAll().subscribe({
@@ -55,7 +60,7 @@ export class MyProfileComponent {
           // Query the user's appointments, create forms
           this.appointmentService.getAll().subscribe({
             next: (appointments) => {
-              this.appointments = appointments.filter(appointment => appointment.user.email === loggedInUserEmail);
+              this.appointments = appointments.filter(appointment => appointment.user?.email === loggedInUserEmail);
             }
           });
         },

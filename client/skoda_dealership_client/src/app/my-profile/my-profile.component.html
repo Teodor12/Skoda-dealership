@@ -1,4 +1,63 @@
 <div class="container">
+<!--User navbar-->
+  <nav class="green-navbar" *ngIf="!isAdmin">
+    <ul>
+      <li>
+        <a routerLink="/car-advertisement-viewer" class="nav-link"
+          ><i class="fas fa-chart-bar"></i> Hírdetések
+        </a>
+      </li>
+      <li>
+        <a
+          routerLink="/my-profile"
+          class="nav-link active"
+          routerLinkActive="active"
+          ><i class="fas fa-car"></i> Profilom</a
+        >
+      </li>
+    </ul>
+  </nav>
+<!--Admin navbar-->
+<nav class="green-navbar" *ngIf="isAdmin">
+  <ul>
+    <li>
+      <a routerLink="/appointment-viewer" class="nav-link"
+        ><i class="fas fa-chart-bar"></i> Foglalt időpontok
+      </a>
+    </li>
+    <li>
+      <a routerLink="/testdrive-viewer" class="nav-link"
+        ><i class="fas fa-chart-bar"></i> Tesztvezetések
+      </a>
+    </li>
+    <li>
+      <a routerLink="/car-advertisement-management"class="nav-link"
+        ><i class="fas fa-chart-bar"></i> Hírdetések kezelése
+      </a>
+    </li>
+    <li>
+      <a routerLink="/car-advertisement-handler" class="nav-link"
+        ><i class="fas fa-chart-bar"></i> Hírdetések hozzáadása
+      </a>
+    </li>
+
+    <li>
+      <a routerLink="/user-management" class="nav-link"
+        ><i class="fas fa-chart-bar"></i> Felhasználók
+      </a>
+    </li>
+
+    <li>
+      <a
+        routerLink="/my-profile"
+        class="nav-link active"
+        routerLinkActive="active"
+        ><i class="fas fa-car"></i> Profilom</a
+      >
+    </li>
+  </ul>
+</nav>
+
   <h1>Profilom:</h1>
   <div class="profileCard">
     <div class="profile-header">
@@ -17,9 +76,9 @@
     </div>
   </div>
 
-  <h2 style="margin-top: 45px">Tesztvezetések:</h2>
+  <h2 style="margin-top: 45px" *ngIf="!isAdmin">Tesztvezetések:</h2>
 
-  <table *ngIf="testDrives.length > 0" class="testdrive-table">
+  <table *ngIf="testDrives.length > 0 && !isAdmin" class="testdrive-table">
     <thead>
       <tr>
         <th>Dátum</th>
@@ -49,12 +108,12 @@
     </tbody>
   </table>
 
-  <div *ngIf="testDrives.length == 0" class="noTestDriveDiv">
+  <div *ngIf="testDrives.length == 0 && !isAdmin" class="noTestDriveDiv">
     <p><strong> Jelenleg nincs időpont foglalva tesztvezetéshez.</strong></p>
   </div>
 
-  <h2 style="margin-top: 45px">Foglalt időpontok:</h2>
-  <table *ngIf="appointments.length > 0" class="appointment-table">
+  <h2 style="margin-top: 45px" *ngIf="!isAdmin">Foglalt időpontok:</h2>
+  <table *ngIf="appointments.length > 0 && !isAdmin" class="appointment-table">
     <thead>
       <tr>
         <th>Dátum</th>
@@ -86,7 +145,7 @@
     </tbody>
   </table>
 
-  <div *ngIf="appointments.length == 0" class="noAppointmentDiv">
+  <div *ngIf="appointments.length == 0  && !isAdmin" class="noAppointmentDiv">
     <p><strong> Jelenleg nincs időpont foglalva ügyintézéshez. </strong></p>
   </div>
 

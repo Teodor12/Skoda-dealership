@@ -7,11 +7,16 @@ import { MongoCarAdvertisement } from '../shared/model/mongo/MongoCarAdvertiseme
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { RouterModule } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { InfoDialogComponent } from '../shared/components/info-dialog/info-dialog.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { ErrorDialogComponent } from '../shared/components/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-car-advertisement-management',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatToolbarModule, MatGridListModule, ReactiveFormsModule],
+  imports: [CommonModule, MatCardModule, MatToolbarModule, MatGridListModule, MatProgressSpinnerModule, ReactiveFormsModule, RouterModule],
   templateUrl: './car-advertisement-management.component.html',
   styleUrl: './car-advertisement-management.component.scss'
 })
@@ -25,8 +30,9 @@ export class CarAdvertisementManagementComponent {
   trimLevelOptions = Object.values(TrimLevel);
   optionalServiceOptions = Object.values(OptionalService);
   availableImages = [...availableImages];
+  isLoading = false;
 
-  constructor(private fb: FormBuilder, private carAdvertisementService: CarAdvertisementService) {}
+  constructor(private fb: FormBuilder, private carAdvertisementService: CarAdvertisementService, private dialog: MatDialog) { }
 
   ngOnInit() {
     this.carAdvertisementService.getAll().subscribe({
@@ -53,9 +59,10 @@ export class CarAdvertisementManagementComponent {
   }
 
   onUpdate(index: number) {
+    this.isLoading = true
     const formValue = this.carForms[index].value;
 
-    const newMongoCarAdvertisement:MongoCarAdvertisement = {
+    const newMongoCarAdvertisement: MongoCarAdvertisement = {
       _id: this.carAdvertisements[index]._id,
       __v: this.carAdvertisements[index].__v,
       carModel: this.carAdvertisements[index].carModel,
@@ -68,19 +75,26 @@ export class CarAdvertisementManagementComponent {
     }
 
     this.carAdvertisementService.update(newMongoCarAdvertisement).subscribe({
-      next: (updatedCar:MongoCarAdvertisement) => {
+      next: (updatedCar: MongoCarAdvertisement) => {
         this.carAdvertisements[index] = updatedCar;
         this.carForms[index].markAsPristine();
-        console.log('Update successful', updatedCar);
+        setTimeout(() => {
+          this.isLoading = false
+          const dialogRef = this.dialog.open(InfoDialogComponent, { data: 'Hírdetés sikeresen frissítve.' })
+        }, 1000);
       },
       error: (error) => {
-        console.error('Update failed:', error);
-      this.carForms[index].patchValue(this.carAdvertisements[index]);
+        this.carForms[index].patchValue(this.carAdvertisements[index]);
+        setTimeout(() => {
+          this.isLoading = false
+          const dialogRef = this.dialog.open(ErrorDialogComponent, { data: 'A hírdetést nem sikerült frissíteni!' })
+        }, 1000);
       }
     })
-}
+  }
 
-  onDelete(_id:string) {
+  onDelete(_id: string) {
+    this.isLoading = true
     console.log(_id)
     this.carAdvertisementService.delete(_id).subscribe({
       next: (data) => {
@@ -90,9 +104,17 @@ export class CarAdvertisementManagementComponent {
         if (index !== -1) {
           this.carForms.splice(index, 1);
         }
+        setTimeout(() => {
+          this.isLoading = false
+          const dialogRef = this.dialog.open(InfoDialogComponent, { data: 'Hírdetés sikeresen törölve.' })
+        }, 1000);
       },
       error: (err) => {
         console.log(err);
+        setTimeout(() => {
+          this.isLoading = false
+          const dialogRef = this.dialog.open(ErrorDialogComponent, { data: 'A hírdetést nem sikerült törölni!' })
+        }, 1000);
       }
     });
   }

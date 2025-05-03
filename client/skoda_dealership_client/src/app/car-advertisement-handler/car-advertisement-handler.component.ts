@@ -6,11 +6,13 @@ import { CommonModule } from '@angular/common';
 import { CarAdvertisementService } from '../shared/services/car-advertisement.service';
 import { InfoDialogComponent } from '../shared/components/info-dialog/info-dialog.component';
 import { CarModel, EngineType, OptionalService, TrimLevel } from '../shared/constans/carAdvertisementConstants';
+import { RouterModule } from '@angular/router';
+import { ErrorDialogComponent } from '../shared/components/error-dialog/error-dialog.component';
 
 @Component({
   selector: 'app-car-form',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule],
+  imports: [ReactiveFormsModule, CommonModule, MatProgressSpinnerModule, RouterModule],
   templateUrl: './car-advertisement-handler.component.html',
   styleUrls: ['./car-advertisement-handler.component.scss']
 })
@@ -44,43 +46,45 @@ export class CarAdvertisementHandlerComponent {
   isLoading = false;
   errorMessage = '';
 
-  constructor(private formBuilder:FormBuilder, private carAdvertisementService: CarAdvertisementService, private dialog: MatDialog) {}
+  constructor(private formBuilder: FormBuilder, private carAdvertisementService: CarAdvertisementService, private dialog: MatDialog) { }
 
   ngOnInit() {
-      this.carAdvertisementForm = this.formBuilder.group({
-        carModel: ['', [Validators.required]],
-        engine: ['', [Validators.required]],
-        mileage: ['', [Validators.required]],
-        trimLevel: ['', [Validators.required]],
-        optionalService: ['', Validators.required],
-        image: ['', Validators.required],
-        price: ['', Validators.required]
+    this.carAdvertisementForm = this.formBuilder.group({
+      carModel: ['', [Validators.required]],
+      engine: ['', [Validators.required]],
+      mileage: ['', [Validators.required]],
+      trimLevel: ['', [Validators.required]],
+      optionalService: ['', Validators.required],
+      image: ['', Validators.required],
+      price: ['', Validators.required]
     })
   }
 
   onSubmit() {
     this.isLoading = true;
-    if(this.carAdvertisementForm.valid) {
+    if (this.carAdvertisementForm.valid) {
       this.carAdvertisementService.addCarAdvertisement(this.carAdvertisementForm.value).subscribe({
         next: (data) => {
           console.log(data);
           setTimeout(() => {
             this.isLoading = false
-            const dialogRef = this.dialog.open(InfoDialogComponent, {data:'Advertisement successfully added.'})
+            const dialogRef = this.dialog.open(InfoDialogComponent, { data: 'Hírdetés sikeresen mentve.' })
           }, 1000);
         }, error: (err) => {
           console.log(err)
           setTimeout(() => {
-            this.isLoading = false
-
-          })
+            const dialogRef = this.dialog.open(ErrorDialogComponent, { data: 'Nem sikerült hozzáadni a hírdetést!' })
+            this.isLoading = false;
+          }, 1000);
         }
       });
+    } else {
+      setTimeout(() => {
+        this.isLoading = false;
+        const dialogRef = this.dialog.open(ErrorDialogComponent, { data: 'Érvénytelen adatok!' })
+      }, 1000);
     }
   }
-
-  goBack() {
-
-  }
-
 }
+
+

@@ -4,11 +4,13 @@ import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { CarAdvertisementHandlerComponent } from './car-advertisement-handler/car-advertisement-handler.component';
 import { CarAdvertisementManagementComponent } from './car-advertisement-management/car-advertisement-management.component';
+import { RouterModule } from '@angular/router';
+import { routes } from './app.routes';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, LoginComponent, SignupComponent, CarAdvertisementHandlerComponent, CarAdvertisementManagementComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

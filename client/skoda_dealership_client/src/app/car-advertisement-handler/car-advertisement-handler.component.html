@@ -1,52 +1,100 @@
-<div class="form-container">
+<div class="container">
+
+  <nav class="green-navbar">
+    <ul>
+      <li>
+        <a routerLink="/appointment-viewer" class="nav-link" 
+          ><i class="fas fa-chart-bar"></i> Foglalt időpontok
+        </a>
+      </li>
+      <li>
+        <a routerLink="/testdrive-viewer" class="nav-link"
+          ><i class="fas fa-chart-bar"></i> Tesztvezetések
+        </a>
+      </li>
+      <li>
+        <a routerLink="/car-advertisement-management"class="nav-link"
+          ><i class="fas fa-chart-bar"></i> Hírdetések kezelése
+        </a>
+      </li>
+      <li>
+        <a routerLink="/car-advertisement-handler" class="nav-link active" routerLinkActive="active"
+          ><i class="fas fa-chart-bar"></i> Hírdetések hozzáadása
+        </a>
+      </li>
+
+      <li>
+        <a routerLink="/user-management" class="nav-link"
+          ><i class="fas fa-chart-bar"></i> Felhasználók
+        </a>
+      </li>
+
+      <li>
+        <a
+          routerLink="/my-profile"
+          class="nav-link"
+          ><i class="fas fa-car"></i> Profilom</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+
+  <div class="form-container">
     <form class="car-form" [formGroup]="carAdvertisementForm" (ngSubmit)="onSubmit()">
       <!-- Car Model -->
       <select formControlName="carModel" required [ngClass]="{'invalid-input': carAdvertisementForm.get('carModel')?.errors}">
-        <option disabled selected value="">Select car model</option>
+        <option disabled selected value="">Modell kiválasztása</option>
         <option *ngFor="let model of carModels" [value]="model">{{ model }}</option>
       </select>
-      <div>
-        <i *ngIf="carAdvertisementForm.get('carModel')?.errors?.['required']">Car model type is required.</i>
+      <div *ngIf="carAdvertisementForm.get('carModel')?.invalid && (carAdvertisementForm.get('carModel')?.dirty || carAdvertisementForm.get('carModel')?.touched)">
+        <i *ngIf="carAdvertisementForm.get('carModel')?.errors?.['required']">A modell kiválasztása kötelező.</i>
       </div>
 
       <!-- Engine -->
       <div>
         <select formControlName="engine" type="select" placeholder="Engine type" required [ngClass]="{'invalid-input': carAdvertisementForm.get('engine')?.errors}">
-          <option disabled selected value="">Select engine type</option>
+          <option disabled selected value="">Motor kiválasztása</option>
           <option *ngFor="let engine of engineTypes" [value]="engine">{{ engine }}</option>
         </select>
         <div *ngIf="carAdvertisementForm.get('engine')?.invalid && (carAdvertisementForm.get('engine')?.dirty || carAdvertisementForm.get('engine')?.touched)">
-          <i *ngIf="carAdvertisementForm.get('engine')?.errors?.['required']">Engine type is required.</i>
+          <i *ngIf="carAdvertisementForm.get('engine')?.errors?.['required']">A motor kiválasztása kötelező.</i>
         </div>
       </div>
 
 
       <!-- Mileage -->
       <input formControlName="mileage" type="range" min="0" max="5000" step="50" placeholder="Mileage" required [ngClass]="{'invalid-input': carAdvertisementForm.get('mileage')?.errors}" />
-      <div class="rangeValue">Mileage: {{carAdvertisementForm.get('mileage')?.value}} km</div>
+      <div class="rangeValue">Futásteljesítmény: {{carAdvertisementForm.get('mileage')?.value}} km</div>
       <div *ngIf="carAdvertisementForm.get('mileage')?.invalid && (carAdvertisementForm.get('mileage')?.dirty || carAdvertisementForm.get('mileage')?.touched)">
-        <i *ngIf="carAdvertisementForm.get('mileage')?.errors?.['required']">Mileage is required.</i>
+        <i *ngIf="carAdvertisementForm.get('mileage')?.errors?.['required']">A Futásteljesítmény megadása kötelező.</i>
       </div>
 
       <!-- Trim Level -->
       <div>
         <select formControlName="trimLevel" required [ngClass]="{'invalid-input': carAdvertisementForm.get('trimLevel')?.errors}">
-          <option disabled selected value="">Select trim level</option>
+          <option disabled selected value="">Felszereltségi szint kiválasztása</option>
           <option *ngFor="let trim of trimLevels" [value]="trim">{{ trim }}</option>
         </select>
         <div *ngIf="carAdvertisementForm.get('trimLevel')?.invalid && (carAdvertisementForm.get('trimLevel')?.dirty || carAdvertisementForm.get('trimLevel')?.touched)">
-          <i *ngIf="carAdvertisementForm.get('trimLevel')?.errors?.['required']">Trim level is required.</i>
+          <i *ngIf="carAdvertisementForm.get('trimLevel')?.errors?.['required']">A felszereltségi szint kiválasztása kötelező.</i>
         </div>
       </div>
 
       <!-- Optional Service -->
       <div>
-        <select formControlName="optionalService" [ngClass]="{'invalid-input': carAdvertisementForm.get('optionalService')?.errors}">
-          <option value="">Select additional service</option>
+        <select formControlName="optionalService" required [ngClass]="{'invalid-input': carAdvertisementForm.get('optionalService')?.errors}">
+          <option disabled selected value="">Szolgáltatás kiválasztása</option>
           <option *ngFor="let service of optionalServices" [value]="service">{{ service }}</option>
         </select>
+        <div *ngIf="carAdvertisementForm.get('optionalService')?.invalid && (carAdvertisementForm.get('optionalService')?.dirty || carAdvertisementForm.get('optionalService')?.touched)">
+          <i *ngIf="carAdvertisementForm.get('optionalService')?.errors?.['required']">
+            A szolgáltatás kiválasztása kötelező.
+          </i>
+        </div>
       </div>
 
+      <!-- Price  -->
       <input formControlName="price" type="range" min="0" max="15000000" step="50000" placeholder="Price (HUF)" required [ngClass]="{'invalid-input': carAdvertisementForm.get('price')?.errors}" />
       <div class="rangeValue">Price: {{carAdvertisementForm.get('price')?.value}} HUF</div>
       <div *ngIf="carAdvertisementForm.get('price')?.invalid && (carAdvertisementForm.get('price')?.dirty || carAdvertisementForm.get('price')?.touched)">
@@ -56,11 +104,11 @@
       <!-- Image -->
       <div>
         <select formControlName="image" required [ngClass]="{'invalid-input': carAdvertisementForm.get('image')?.errors}">
-          <option disabled selected value="">Select car image</option>
+          <option disabled selected value="">Kép kiválasztása</option>
           <option *ngFor="let image of availableImages" [value]="image">{{ image }}</option>
         </select>
         <div *ngIf="carAdvertisementForm.get('image')?.invalid && (carAdvertisementForm.get('image')?.dirty || carAdvertisementForm.get('image')?.touched)">
-          <i *ngIf="carAdvertisementForm.get('image')?.errors?.['required']">Image is required.</i>
+          <i *ngIf="carAdvertisementForm.get('image')?.errors?.['required']">A kép kiválasztása kötelező.</i>
         </div>
         <div class="image-preview" *ngIf="carAdvertisementForm.get('image')?.value">
           <img [src]="carAdvertisementForm.get('image')?.value" alt="Selected car image" class="preview-image">
@@ -74,10 +122,7 @@
 
       <!-- Buttons -->
       <div class="buttons">
-        <button type="submit" [disabled]="carAdvertisementForm.invalid || isLoading">Save Advertisement</button>
-      </div>
-      <div class="buttons">
-        <button type="button" (click)="goBack()">Back</button>
+        <button type="submit">Hírdetés mentése</button>
       </div>
 
       <!-- Loading Indicator -->
@@ -86,3 +131,6 @@
       </div>
     </form>
   </div>
+</div>
+
+

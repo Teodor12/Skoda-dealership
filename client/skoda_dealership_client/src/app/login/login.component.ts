@@ -37,8 +37,8 @@ export class LoginComponent {
       next: (data) => {
         const sessionUser:MongoUser = data.user
         if (sessionUser.email === 'admin@gmail.com' && sessionUser.name === 'admin') {
-          console.log('setting currentUser to admin')
-          localStorage.setItem('currentUser', 'admin');
+          console.log('setting currentUser to admin@gmail.com')
+          localStorage.setItem('currentUser', 'admin@gmail.com');
         } else {
           console.log('setting current user to ', sessionUser.email)
           localStorage.setItem('currentUser', sessionUser.email);

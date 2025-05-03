@@ -27,7 +27,7 @@ import { AppointmentService } from '../shared/services/appointment/appointment.s
     MatProgressSpinnerModule,
   ],
   templateUrl: './car-advertisement-viewer.component.html',
-  styleUrl: './car-advertisement-viewer.component.scss',
+  styleUrls: ['./car-advertisement-viewer.component.scss'],
 })
 export class CarAdvertisementViewerComponent {
   testDriveForms!: FormGroup[];
