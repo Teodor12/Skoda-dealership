@@ -1,0 +1,40 @@
+[{
+  "_id": {
+    "$oid": "67e986b322efc4393bc57dd4"
+  },
+  "email": "admin@gmail.com",
+  "name": "admin",
+  "phoneNumber": "+36303214807",
+  "password": "$2b$10$oFBb4fBiC9rw4T4jEGSR0uTdH/1ILHXgE5ydDYCaWAuoZsNZbrkpO",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fcbc69a51f4892f807a6ed"
+  },
+  "email": "teszt.elek@gmail.com",
+  "name": "Teszt Elek",
+  "phoneNumber": "0630325656",
+  "password": "$2b$10$JFPHTPgMvzdRtL/qDIErneZtztNdQVsc3at4smsjQJnNYaJhDzUNO",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680b4f56b9139fa38ec12c90"
+  },
+  "email": "hard.vera@gmail.com",
+  "name": "Hard Vera",
+  "phoneNumber": "063032568",
+  "password": "$2b$10$JwsjiXTXCfHagHI9/brOGOCcnnfNP/hw7D7TWRsaAE0iFbVDcxtg6",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680f5e4e34a3250fd4f25e3b"
+  },
+  "email": "debu.geza@gmail.com",
+  "name": "Debu Geza",
+  "phoneNumber": "06123456",
+  "password": "$2b$10$sPRXcW40JFaabIpAu8h6R.IlqjWuCqAVtog5PGKplkWMVCZ.QJUTq",
+  "__v": 0
+}]

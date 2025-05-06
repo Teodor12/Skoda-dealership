@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "node_modules/typescript/bin/tsc",
-    "start": "node build/index.js"
+    "start": "node build/index.js",
+    "init_db": "node build/init/seed.js"
   },
   "author": "",
   "license": "ISC",

@@ -1,0 +1,32 @@
+[{
+  "_id": {
+    "$oid": "680b83619f564570b0f4c7ba"
+  },
+  "user": {
+    "$oid": "680b4f56b9139fa38ec12c90"
+  },
+  "carAdvertisement": {
+    "$oid": "67fcbe69a51f4892f807a6f9"
+  },
+  "appointmentDate": {
+    "$date": "2025-05-05T00:00:00.000Z"
+  },
+  "appointmentType": "Személyes konzultáció",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680f85977862c0a92cf8064e"
+  },
+  "user": {
+    "$oid": "67fcbc69a51f4892f807a6ed"
+  },
+  "carAdvertisement": {
+    "$oid": "67fcbe69a51f4892f807a6f9"
+  },
+  "appointmentDate": {
+    "$date": "2025-05-28T00:00:00.000Z"
+  },
+  "appointmentType": "Finanszírozási tanácsadás / ügyintézés",
+  "__v": 0
+}]

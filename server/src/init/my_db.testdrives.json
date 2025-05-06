@@ -1,0 +1,45 @@
+[{
+  "_id": {
+    "$oid": "680f85787862c0a92cf80648"
+  },
+  "user": {
+    "$oid": "67fcbc69a51f4892f807a6ed"
+  },
+  "carAdvertisement": {
+    "$oid": "67fcbe69a51f4892f807a6f9"
+  },
+  "testDriveDate": {
+    "$date": "2025-05-28T00:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "680f85867862c0a92cf8064c"
+  },
+  "user": {
+    "$oid": "67fcbc69a51f4892f807a6ed"
+  },
+  "carAdvertisement": {
+    "$oid": "67fcbeada51f4892f807a6ff"
+  },
+  "testDriveDate": {
+    "$date": "2025-05-31T00:00:00.000Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "6817268acc50097bfe00c235"
+  },
+  "user": {
+    "$oid": "680b4f56b9139fa38ec12c90"
+  },
+  "carAdvertisement": {
+    "$oid": "67fa9fad2ccaac881b4eb566"
+  },
+  "testDriveDate": {
+    "$date": "2025-05-29T00:00:00.000Z"
+  },
+  "__v": 0
+}]

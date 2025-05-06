@@ -1,0 +1,104 @@
+[{
+  "_id": {
+    "$oid": "67fa7a072ccaac881b4eb563"
+  },
+  "carModel": "Superb",
+  "engine": "2.0 TDI",
+  "mileage": 2000,
+  "trimLevel": "LK",
+  "optionalService": "3 év garancia",
+  "image": "assets/carImages/superb-green.png",
+  "price": 12750000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fa9fad2ccaac881b4eb566"
+  },
+  "carModel": "Kodiaq",
+  "engine": "2.0 TDI",
+  "mileage": 300,
+  "trimLevel": "LK",
+  "optionalService": "Kedvezményes nagy szervíz",
+  "image": "assets/carImages/kodiaq-blue.png",
+  "price": 15000000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fcbe69a51f4892f807a6f9"
+  },
+  "carModel": "Fabia",
+  "engine": "1.0 TSI",
+  "mileage": 550,
+  "trimLevel": "RS",
+  "optionalService": "Nincs extra szolgáltatás",
+  "image": "assets/carImages/fabia-red.png",
+  "price": 4300000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fcbe7ca51f4892f807a6fb"
+  },
+  "carModel": "Fabia",
+  "engine": "1.0 TSI",
+  "mileage": 1350,
+  "trimLevel": "Essence",
+  "optionalService": "Nincs extra szolgáltatás",
+  "image": "assets/carImages/fabia-white.png",
+  "price": 2700000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fcbe97a51f4892f807a6fd"
+  },
+  "carModel": "Octavia",
+  "engine": "1.6 TDI",
+  "mileage": 300,
+  "trimLevel": "Selection",
+  "optionalService": "1 év garancia",
+  "image": "assets/carImages/octavia-black.png",
+  "price": 6350000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fcbeada51f4892f807a6ff"
+  },
+  "carModel": "Karoq",
+  "engine": "1.5 TSI",
+  "mileage": 1700,
+  "trimLevel": "Selection",
+  "optionalService": "Kedvezményes kis szervíz",
+  "image": "assets/carImages/karoq-orange.png",
+  "price": 7500000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fcbec0a51f4892f807a701"
+  },
+  "carModel": "Karoq",
+  "engine": "1.6 TDI",
+  "mileage": 1150,
+  "trimLevel": "LK",
+  "optionalService": "Kedvezményes nagy szervíz",
+  "image": "assets/carImages/karoq-black.png",
+  "price": 9550000,
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "67fcce9ba51f4892f807a713"
+  },
+  "carModel": "Kodiaq",
+  "engine": "2.0 TDI",
+  "mileage": 700,
+  "trimLevel": "RS",
+  "optionalService": "3 év garancia",
+  "image": "assets/carImages/kodiaq-white.png",
+  "price": 13300000,
+  "__v": 0
+}]
