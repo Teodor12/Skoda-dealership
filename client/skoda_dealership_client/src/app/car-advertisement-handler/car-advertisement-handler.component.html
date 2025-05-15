@@ -96,7 +96,7 @@
 
       <!-- Price  -->
       <input formControlName="price" type="range" min="0" max="15000000" step="50000" placeholder="Price (HUF)" required [ngClass]="{'invalid-input': carAdvertisementForm.get('price')?.errors}" />
-      <div class="rangeValue">Price: {{carAdvertisementForm.get('price')?.value}} HUF</div>
+      <div class="rangeValue">"Ár": {{carAdvertisementForm.get('price')?.value}} HUF</div>
       <div *ngIf="carAdvertisementForm.get('price')?.invalid && (carAdvertisementForm.get('price')?.dirty || carAdvertisementForm.get('price')?.touched)">
         <i *ngIf="carAdvertisementForm.get('price')?.errors?.['required']">Price is required.</i>
       </div>
